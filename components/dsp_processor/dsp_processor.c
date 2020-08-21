@@ -124,8 +124,8 @@ static void dsp_i2s_task_handler(void *arg)
         //widen processed audio to 32 bits and transfer to output buffer
         for (int sample = 0; sample < len; sample++)
         { 
-            valint[0] = (bufPtr0[sample] * 1147483647);
-            valint[1] = (bufPtr1[sample] * 1147483647);
+            valint[0] = (bufPtr0[sample] * 1073741824);
+            valint[1] = (bufPtr1[sample] * 1073741824);
             
             for(int chl = 0; chl < CHANNELS; chl++)
             {   
