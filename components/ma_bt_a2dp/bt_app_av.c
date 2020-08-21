@@ -316,12 +316,14 @@ static void bt_av_hdl_avrc_ct_evt(uint16_t event, void *p_param)
 
 static void volume_set_by_controller(uint8_t volume)
 {
-    ESP_LOGI(BT_RC_TG_TAG, "Volume is set by remote controller %d%%\n", (uint32_t)volume * 100 / 0x7f);
+    //ESP_LOGI(BT_RC_TG_TAG, "Volume is set by remote controller %d%%\n", (uint32_t)volume * 100 / 0x7f);
     _lock_acquire(&s_volume_lock);
     s_volume = volume;
     _lock_release(&s_volume_lock);
     //printf("Volume : %d ", volume);
-    ma_write_byte(0x20,1,MA_vol_db_master__a,0x20+127-volume);
+    volume = 0x20+127-volume;
+    ESP_LOGI(BT_RC_TG_TAG, "Volume is set by remote controller %d\n", volume);
+    ma_write_byte(0x20,1,MA_vol_db_master__a,volume);
 }
 
 static void volume_set_by_local_host(uint8_t volume)
