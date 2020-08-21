@@ -72,7 +72,7 @@ static void dsp_i2s_task_handler(void *arg)
     //audio IO variables 
     uint8_t *audio = NULL;
     uint8_t dsp_audio[DATASIZE*BUFSIZE];
-    int32_t valint[2];
+    int32_t valint[2] = {0,0};
 
     //functions specific counters
     size_t chunk_size = 0;
@@ -119,17 +119,17 @@ static void dsp_i2s_task_handler(void *arg)
         }
 
         //widen processed audio to 32 bits and transfer to output buffer
-        for (uint16_t i=0; i < len; i++)
+        for (uint16_t sample = 0; sample < len; sample++)
         { 
-            valint[0] = (bufPtr0[i] * 2147483647);
-            valint[1] = (bufPtr1[i] * 2147483647);
+            valint[1] = (*(bufPtr0+sample) * 2147483647);
+            valint[0] = (*(bufPtr1+sample) * 2147483647);
             
             for(uint8_t chl = 0; chl < 2; chl++)
             {    
                 for(uint8_t byte = 0; byte < WORDSIZE; byte++)
                 {
-                    dsp_audio[i*DATASIZE + (chl*WORDSIZE) + byte] = valint[chl] & 0xff;
-                    valint[chl] = valint[chl] >> 8;
+                    dsp_audio[sample*DATASIZE + (chl*WORDSIZE) + byte] = valint[chl];
+                    *(valint+chl) >>= 8;
                 }
             }
         }
