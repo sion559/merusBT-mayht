@@ -10,6 +10,8 @@
 #include "dsps_biquad.h"
 
 #include "dsp_processor.h"
+#include "ma120x0.h"
+#include "MerusAudio.h"
 
 static xTaskHandle s_dsp_i2s_task_handle = NULL;
 static RingbufHandle_t s_ringbuf_i2s = NULL;
