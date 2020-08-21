@@ -100,10 +100,10 @@ static void dsp_i2s_task_handler(void *arg)
         switch (dspFlow) {
           case dspfStereo :
                 //pass right trough
-                //bufPtr0 = sbuffer0;
-                //bufPtr1 = sbuffer1;
-                memcpy(sbufout0, sbuffer0, len);
-                memcpy(sbufout1, sbuffer1, len);
+                bufPtr0 = sbuffer0;
+                bufPtr1 = sbuffer1;
+                //memcpy(sbufout0, sbuffer0, len);
+                //memcpy(sbufout1, sbuffer1, len);
                break;
           case dspfBiamp :
             { // Process audio ch0 LOW PASS FILTER
@@ -124,8 +124,8 @@ static void dsp_i2s_task_handler(void *arg)
         //widen processed audio to 32 bits and transfer to output buffer
         for (int sample = 0; sample < len; sample++)
         { 
-            valint[0] = (sbufout0[sample] * 2147483647);
-            valint[1] = (sbufout1[sample] * 2147483647);
+            valint[0] = (bufPtr0[sample] * 1147483647);
+            valint[1] = (bufPtr1[sample] * 1147483647);
             
             for(int chl = 0; chl < CHANNELS; chl++)
             {   
