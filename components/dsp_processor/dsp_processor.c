@@ -122,7 +122,7 @@ static void dsp_i2s_task_handler(void *arg)
         //widen processed audio to 32 bits and transfer to output buffer
         for (int sample = 0; sample < len; sample++)
         { 
-            valint[0] = (bufPtr0[sample] * 1073741824);
+            valint[0] = (bufPtr0[sample] * 1073741824);     //magic number 
             valint[1] = (bufPtr1[sample] * 1073741824);
             
             for(int chl = 0; chl < CHANNELS; chl++)
@@ -133,7 +133,6 @@ static void dsp_i2s_task_handler(void *arg)
                     bufItter = (sample*DATASIZE) + (chl*WORDSIZE) + byte;
                     dsp_audio[bufItter] = valint[chl];
                     valint[chl] >>= 8;
-                    //ESP_LOGI("I2S", "bufIter: %d", bufItter);
                 }
             }
         }
@@ -141,17 +140,7 @@ static void dsp_i2s_task_handler(void *arg)
 
         if (cnt >= 200)
         {
-            //ESP_LOGI("I2S", "Chunk :%d",chunk_size);
-            //ESP_LOGI("I2S", "data[0]: %d", dsp_audio[len*DATASIZE-8]);
-            //ESP_LOGI("I2S", "data[1]: %d", dsp_audio[len*DATASIZE-7]);
-            //ESP_LOGI("I2S", "data[2]: %d", dsp_audio[len*DATASIZE-6]);
-            //ESP_LOGI("I2S", "data[3]: %d", dsp_audio[len*DATASIZE-5]);
-            //ESP_LOGI("I2S", "data[4]: %d", dsp_audio[len*DATASIZE-4]);
-            //ESP_LOGI("I2S", "data[5]: %d", dsp_audio[len*DATASIZE-3]);
-            //ESP_LOGI("I2S", "data[6]: %d", dsp_audio[len*DATASIZE-2]);
-            //ESP_LOGI("I2S", "data[7]: %d", dsp_audio[len*DATASIZE-1]);
-            //ESP_LOGI("I2S", "buf: %d", (int)(*(bufPtr1+len-1)*2147483648));
-            //ESP_LOGI("I2S", "val: %d", (int)(valint[1]));
+            ESP_LOGI("I2S", "Chunk :%d",chunk_size);
             cnt = 0;
         } 
 
