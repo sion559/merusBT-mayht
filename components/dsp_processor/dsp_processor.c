@@ -47,9 +47,9 @@ void setup_dsp_i2s(uint32_t sample_rate)
   printf("%d %d %d\n",CONFIG_I2S_BCK_PIN,CONFIG_I2S_LRCK_PIN,CONFIG_I2S_DATA_PIN);
 
   i2s_set_pin(0, &pin_config0);
-  gpio_set_drive_capability(CONFIG_I2S_BCK_PIN,0);
-  gpio_set_drive_capability(CONFIG_I2S_LRCK_PIN,0);
-  gpio_set_drive_capability(CONFIG_I2S_DATA_PIN,0);
+  gpio_set_drive_capability(CONFIG_I2S_BCK_PIN,2);
+  gpio_set_drive_capability(CONFIG_I2S_LRCK_PIN,2);
+  gpio_set_drive_capability(CONFIG_I2S_DATA_PIN,2);
 }
 
 
@@ -102,8 +102,6 @@ static void dsp_i2s_task_handler(void *arg)
                 //pass right trough
                 bufPtr0 = sbuffer0;
                 bufPtr1 = sbuffer1;
-                //memcpy(sbufout0, sbuffer0, len);
-                //memcpy(sbufout1, sbuffer1, len);
                break;
           case dspfBiamp :
             { // Process audio ch0 LOW PASS FILTER
