@@ -10,8 +10,8 @@
 #include "dsps_biquad.h"
 
 #include "dsp_processor.h"
-#include "ma120x0.h"
-#include "MerusAudio.h"
+//#include "ma120x0.h"
+//#include "MerusAudio.h"
 
 static xTaskHandle s_dsp_i2s_task_handle = NULL;
 static RingbufHandle_t s_ringbuf_i2s = NULL;
@@ -143,7 +143,7 @@ static void dsp_i2s_task_handler(void *arg)
         if (cnt >= 200)
         {
             ESP_LOGI("I2S", "Chunk :%d",chunk_size);
-            ESP_LOGI("I2S", "Chunk :%d",ma_read_byte(0x20,1,MA_vol_db_master__a));
+            //ESP_LOGI("I2S", "Chunk :%d",ma_read_byte(0x20,1,MA_vol_db_master__a));
             cnt = 0;
         } 
 
