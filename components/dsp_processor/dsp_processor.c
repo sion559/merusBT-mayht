@@ -47,9 +47,9 @@ void setup_dsp_i2s(uint32_t sample_rate)
   printf("%d %d %d\n",CONFIG_I2S_BCK_PIN,CONFIG_I2S_LRCK_PIN,CONFIG_I2S_DATA_PIN);
 
   i2s_set_pin(0, &pin_config0);
-  gpio_set_drive_capability(CONFIG_I2S_BCK_PIN,2);
-  gpio_set_drive_capability(CONFIG_I2S_LRCK_PIN,2);
-  gpio_set_drive_capability(CONFIG_I2S_DATA_PIN,2);
+  gpio_set_drive_capability(CONFIG_I2S_BCK_PIN,1);
+  gpio_set_drive_capability(CONFIG_I2S_LRCK_PIN,1);
+  gpio_set_drive_capability(CONFIG_I2S_DATA_PIN,1);
 }
 
 
