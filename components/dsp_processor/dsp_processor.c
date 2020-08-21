@@ -56,7 +56,8 @@ void setup_dsp_i2s(uint32_t sample_rate)
 static void dsp_i2s_task_handler(void *arg)
 { 
     const char WORDSIZE = 4;
-    const char DATASIZE = 2*WORDSIZE;
+    const char CHANNELS = 2;
+    const char DATASIZE = CHANNELS*WORDSIZE;
     const uint32_t BUFSIZE = 512;
 
     //processing buffers
@@ -119,16 +120,18 @@ static void dsp_i2s_task_handler(void *arg)
         }
 
         //widen processed audio to 32 bits and transfer to output buffer
-        for (uint16_t sample = 0; sample < len; sample++)
+        for (int sample = 0; sample < len; sample++)
         { 
-            valint[1] = (*(bufPtr0+sample) * 2147483647);
-            valint[0] = (*(bufPtr1+sample) * 2147483647);
+            valint[0] = (*(bufPtr0+sample) * 2147483647);
+            valint[1] = (*(bufPtr1+sample) * 2147483647);
             
-            for(uint8_t chl = 0; chl < 2; chl++)
-            {    
-                for(uint8_t byte = 0; byte < WORDSIZE; byte++)
+            for(int chl = 0; chl < CHANNELS; chl++)
+            {   
+                int bufItter = 0; 
+                for(int byte = 0; byte < WORDSIZE; byte++)
                 {
-                    dsp_audio[sample*DATASIZE + (chl*WORDSIZE) + byte] = valint[chl];
+                    bufItter = (sample*DATASIZE) + (chl*WORDSIZE) + byte;
+                    dsp_audio[bufItter] = valint[chl];
                     *(valint+chl) >>= 8;
                 }
             }
