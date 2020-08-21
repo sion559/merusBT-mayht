@@ -141,6 +141,7 @@ static void dsp_i2s_task_handler(void *arg)
         if (cnt >= 200)
         {
             ESP_LOGI("I2S", "Chunk :%d",chunk_size);
+            ESP_LOGI("I2S", "Chunk :%d",ma_read_byte(0x20,1,MA_vol_db_master__a));
             cnt = 0;
         } 
 

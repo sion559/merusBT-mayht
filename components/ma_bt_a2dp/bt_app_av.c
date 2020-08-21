@@ -323,7 +323,7 @@ static void volume_set_by_controller(uint8_t volume)
     s_volume = volume;
     _lock_release(&s_volume_lock);
     //printf("Volume : %d ", volume);
-    volume = 0x20+127-volume;
+    volume = 255 - (volume*2);
     ESP_LOGI(BT_RC_TG_TAG, "Volume is set by remote controller %d\n", volume);
     ma_write_byte(0x20,1,MA_vol_db_master__a,volume);
 }
