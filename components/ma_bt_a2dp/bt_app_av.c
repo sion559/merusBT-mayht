@@ -321,7 +321,7 @@ static void volume_set_by_controller(uint8_t volume)
     s_volume = volume;
     _lock_release(&s_volume_lock);
     //printf("Volume : %d ", volume);
-    //ma_write_byte(0x20,1,MA_vol_db_master__a,0x20+127-volume);
+    ma_write_byte(0x20,1,MA_vol_db_master__a,0x20+127-volume);
 }
 
 static void volume_set_by_local_host(uint8_t volume)
